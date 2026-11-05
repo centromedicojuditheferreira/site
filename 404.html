@@ -1,0 +1,9 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Lev Soul</title>
+<script>
+(function(){var m=location.pathname.match(/^\/c\/([a-z0-9]{6,12})\/?$/i);
+if(m){location.replace('/c/?t='+m[1]);return;}
+var n=location.pathname.match(/^\/(assinar|empresas|nosso-nome|privacidade|minha-conta)$/);
+if(n){location.replace('/'+n[1]+'/'+location.search);return;}
+document.addEventListener('DOMContentLoaded',function(){document.body.innerHTML='<div style="font-family:Inter,system-ui;padding:40px;max-width:560px;margin:auto;text-align:center"><h1 style="font-family:Sora,sans-serif;color:#2E2C88">Essa página não existe.</h1><p style="color:#6B678C">Mas a casa está aberta. <a href="/" style="color:#8A4B88">Voltar para o início</a></p></div>';});
+})();
+</script></head><body></body></html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2E2C88">
+<meta name="robots" content="noindex">
+<title>Seu Lev Soul está pronto · confira e aceite</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/icone-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/lev.css">
+</head>
+<body class="app-pg" data-modo="convite">
+<div class="app" id="app">
+  <header><a href="/" aria-label="Lev Soul"><img src="/assets/img/logo-cor.png" alt="Lev Soul"></a><a class="link" href="/">Início</a></header>
+  <div class="progresso" id="progresso" style="display:none">
+    <div class="p-item"><div class="p-barra"><i></i></div><div class="p-txt">Conferir</div></div>
+    <div class="p-item"><div class="p-barra"><i></i></div><div class="p-txt">Aceitar</div></div>
+    <div class="p-item"><div class="p-barra"><i></i></div><div class="p-txt">Pagar</div></div>
+  </div>
+  <main>
+
+
+    <!-- A1 · conferir -->
+    <section class="tela" id="t-a1">
+      <h1 id="a1titulo">Que bom ter você aqui 🤍</h1>
+      <p class="sub">A gente deixou o seu Lev Soul pronto. Confere se está tudo certo:</p>
+      <div class="card lav">
+        <div class="selo">LEV SOUL · ASSINATURA DA FAMÍLIA</div>
+        <div class="preco">
+          <div class="bloco"><div class="valor"><span data-valor="mensalidade">R$ 100</span><span style="font-size:.8rem">/mês</span></div><div class="desc">ativa o acesso da casa inteira</div></div>
+          <div class="bloco"><div class="valor" data-valor="sessao">R$ 60</div><div class="desc">por sessão — paga só quando acontece</div></div>
+        </div>
+        <div class="divisor"></div>
+        <div class="linha"><span class="k">Titular</span><span class="v" id="vNome">—</span></div>
+        <div class="linha" style="align-items:center"><span class="k">CPF</span><input type="tel" id="vCpf" placeholder="000.000.000-00" inputmode="numeric" style="max-width:190px;padding:9px 12px;font-size:.95rem;text-align:right"></div>
+        <div class="linha"><span class="k">Modalidade</span><span class="v">Online e presencial</span></div>
+        <div class="divisor"></div>
+        <div class="linha" style="display:block"><span class="k">Família</span>
+          <div id="listaFamilia" style="margin-top:6px"></div>
+          <button class="link" type="button" onclick="FLUXO.toggleMembro()">+ adicionar alguém da casa</button>
+          <div class="form-membro" id="formMembro">
+            <input type="text" id="fmNome" placeholder="Nome">
+            <select id="fmPar"><option>cônjuge</option><option>filho(a)</option><option>mãe</option><option>pai</option><option>irmã(o)</option><option>outro</option></select>
+            <input type="date" id="fmNasc" title="Data de nascimento (opcional; para menores)" style="min-width:150px">
+            <button class="btn btn-sec" type="button" style="padding:11px 16px;font-size:.85rem" onclick="FLUXO.addMembro()">Incluir</button>
+          </div>
+          <p class="dica" style="margin-top:8px">Sem limite de pessoas. A data de nascimento é opcional — ajuda a gente a cuidar do sigilo dos adultos da casa.</p>
+        </div>
+      </div>
+      <details class="contrato"><summary>📄 Ler o Termo de Adesão completo (2 min) <span>⌄</span></summary><div class="contrato-corpo" id="contratoCorpo"></div></details>
+      <ul class="resumo">
+        <li>A mensalidade ativa o acesso de toda a casa — sem limite de pessoas.</li>
+        <li>Cada sessão sai pelo valor de membro — você paga só quando ela acontece.</li>
+        <li>Pode encerrar a assinatura quando quiser, sem multa.</li>
+        <li>Não é plano de saúde: é uma assinatura de acesso, sem letra miúda.</li>
+      </ul>
+      <label class="aceite"><input type="checkbox" id="chkAceite"><span class="caixinha"><svg viewBox="0 0 16 16"><path d="M2.5 8.5l3.5 3.5 7-8" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt" id="txtAceite">Li e concordo com o Termo de Adesão</span></label>
+      <label class="aceite" style="margin-top:12px"><input type="checkbox" id="chkOptin"><span class="caixinha"><svg viewBox="0 0 16 16"><path d="M2.5 8.5l3.5 3.5 7-8" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">Quero receber conteúdos e novidades da Lev Soul pelo WhatsApp.<small>Opcional. Posso sair quando quiser respondendo SAIR. Mensagens do serviço (código, contrato, cobrança, lembretes) não dependem disto.</small></span></label>
+      <div class="erro-msg" id="a1erro"></div>
+      <button class="btn btn-pri btn-bloco" id="btnAceitar" style="margin-top:18px" disabled onclick="FLUXO.validarA1()">Aceitar e continuar →</button>
+      <p class="micro">🔒 Seus dados estão protegidos. Contrato registrado digitalmente.</p>
+      <p class="micro">Alguma coisa não bateu? Fala com a gente que corrigimos.</p>
+    </section>
+
+    <!-- A2 · código -->
+    <section class="tela" id="t-a2">
+      <h1>Enviamos um código no seu WhatsApp</h1>
+      <p class="sub" id="a2sub">Número terminado em <strong>••••</strong></p>
+      <div class="otp-caixas" id="otp">
+        <input type="tel" maxlength="6" inputmode="numeric" autocomplete="one-time-code" aria-label="dígito 1">
+        <input type="tel" maxlength="1" inputmode="numeric" aria-label="dígito 2">
+        <input type="tel" maxlength="1" inputmode="numeric" aria-label="dígito 3">
+        <input type="tel" maxlength="1" inputmode="numeric" aria-label="dígito 4">
+        <input type="tel" maxlength="1" inputmode="numeric" aria-label="dígito 5">
+        <input type="tel" maxlength="1" inputmode="numeric" aria-label="dígito 6">
+      </div>
+      <div class="erro-msg" id="a2erro" style="justify-content:center"></div>
+      <div class="otp-links">
+        <button class="link" id="reenviar" onclick="FLUXO.reenviar()">Não chegou? Reenviar código</button><br>
+        <span class="dica">Vale por 10 minutos. Se não foi você, pode ignorar.</span>
+      </div>
+    </section>
+
+    <!-- A3 · pagar -->
+    <section class="tela" id="t-a3">
+      <h1>Falta pouco: escolhe como pagar</h1>
+      <div class="valorzao"><div class="n" id="a3valor">R$ 100,00</div><div class="l">primeira mensalidade · ativa a casa inteira</div></div>
+      <div class="abas" id="abas">
+        <button class="ativa" data-meio="cartao" onclick="FLUXO.trocarAba('cartao')">Cartão de crédito</button>
+        <button data-meio="pix" onclick="FLUXO.trocarAba('pix')">Pix</button>
+      </div>
+      <div class="painel-pag ativa" id="pag-cartao"><div id="cartaoCorpo"></div><p class="dica" style="margin-top:12px">No cartão, a mensalidade fica no automático: cada mês é uma compra só do valor do mês — não ocupa o limite como um parcelado. Você troca o cartão quando quiser.</p></div>
+      <div class="painel-pag" id="pag-pix"><div id="pixCorpo"></div><p class="dica" style="margin-top:12px">No Pix, todo mês chega um lembrete com o código para pagar. Quando o Pix Automático estiver disponível no seu banco, dá para deixar no automático também.</p></div>
+    </section>
+
+    <!-- A4 · confirmado -->
+    <section class="tela" id="t-a4">
+      <div class="sucesso-anim"><img src="/assets/img/simbolo-cor.png" alt=""></div>
+      <div class="sucesso-txt"><h1 id="a4titulo">Tudo certo 🤍</h1><p class="sub">Seu Lev Soul está ativo. A gente te chama no WhatsApp para marcar a primeira sessão.</p></div>
+      <div class="card depois">
+        <div class="linha-dp"><span class="em">📅</span><span>A equipe de acolhimento te chama pra marcar a primeira sessão</span></div>
+        <div class="linha-dp"><span class="em">🗓</span><span id="a4venc">Mensalidade todo mês, no mesmo dia</span></div>
+        <div class="linha-dp"><span class="em">📄</span><span>O Termo de Adesão fica na sua área do cliente</span></div>
+      </div>
+      <a class="btn btn-sec btn-bloco" href="/minha-conta/?primeiro=1" style="margin-top:18px">Criar minha senha (30s)</a>
+      <a class="btn btn-fant btn-bloco" href="/">Deixar pra depois</a>
+    </section>
+
+    <!-- erros -->
+    <section class="tela" id="t-vencido">
+      <h1>Este convite venceu — sem problema nenhum.</h1>
+      <p class="sub">Pede um novo falando com a gente, ou ative agora mesmo pelo site.</p>
+      <a class="btn btn-pri btn-bloco" href="/assinar/" style="margin-top:18px">Ativar o Lev Soul (2 min)</a>
+    </section>
+    <section class="tela" id="t-inexistente">
+      <h1>Não encontramos este link.</h1>
+      <p class="sub">Pode ter sido digitado com algum erro. Se você recebeu o link da nossa equipe, é só pedir um novo pelo WhatsApp.</p>
+      <a class="btn btn-pri btn-bloco" href="/assinar/" style="margin-top:18px">Ativar o Lev Soul pelo site</a>
+    </section>
+  </main>
+  <a class="falar" href="#">💬 Falar com a gente</a>
+</div>
+<div class="toast" id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="/assets/js/lev.js"></script>
+<script src="/assets/js/contrato.js"></script>
+<script src="/assets/js/fluxo.js"></script>
+</body>
+</html>

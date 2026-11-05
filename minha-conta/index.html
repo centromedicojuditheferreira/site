@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2E2C88">
+<meta name="robots" content="noindex">
+<title>Minha conta · Lev Soul</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/icone-32.png">
+<link rel="apple-touch-icon" href="/assets/img/icone-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/lev.css">
+<style>
+  .avatar{width:38px;height:38px;border-radius:50%;background:var(--indigo);color:#fff;font-family:Sora;font-weight:700;font-size:.85rem;border:none;cursor:pointer;display:none;place-items:center}
+  .app.logado .avatar{display:grid}
+  .app.logado nav.inferior{display:flex}
+  nav.inferior{display:none}
+  .status-mensal{display:flex;align-items:flex-start;gap:12px}
+  .status-ic{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-size:1.25rem;flex-shrink:0;background:var(--lavanda)}
+  .status-t{font-family:Sora;font-weight:700;font-size:.98rem}
+  .status-d{font-size:.83rem;color:#7A76A0;margin-top:3px;line-height:1.45}
+  .em-dia .status-ic{background:var(--ok-suave)}.em-dia .status-t{color:var(--ok)}
+  .pendente .status-ic{background:var(--alerta-suave)}.pendente .status-t{color:var(--alerta)}
+  .atraso .status-ic{background:var(--erro-suave)}.atraso .status-t{color:var(--erro)}
+  .veu{position:fixed;inset:0;background:rgba(35,32,67,.45);opacity:0;pointer-events:none;transition:opacity .3s;z-index:80}
+  .veu.mostrar{opacity:1;pointer-events:auto}
+  .sheet{position:fixed;left:50%;transform:translate(-50%,105%);bottom:0;width:100%;max-width:470px;background:var(--papel);z-index:90;border-radius:26px 26px 0 0;padding:14px 20px 28px;transition:transform .38s cubic-bezier(.22,1,.36,1);box-shadow:0 -12px 40px rgba(35,32,67,.18);max-height:88vh;overflow-y:auto}
+  .sheet.mostrar{transform:translate(-50%,0)}
+  .alca{width:44px;height:5px;border-radius:99px;background:#DDD9EC;margin:0 auto 14px}
+  .sheet h3{font-family:Sora;font-weight:700;font-size:1.15rem}
+  .ag{display:flex;gap:12px;align-items:center;background:#fff;border:1.5px solid var(--borda);border-radius:var(--r-sm);padding:12px 14px;margin-top:10px}
+  .ag .dia{width:52px;text-align:center;background:var(--lavanda);border-radius:12px;padding:6px 0;flex-shrink:0}
+  .ag .dia b{display:block;font-family:Sora;font-size:1.1rem;color:var(--indigo);line-height:1.1}
+  .ag .dia small{font-size:.68rem;color:var(--cinza);text-transform:uppercase;font-weight:700}
+  .opcao{display:flex;gap:12px;align-items:center;background:#fff;border:1.8px solid var(--borda);border-radius:var(--r-sm);padding:14px;margin-top:10px;cursor:pointer;font-family:Inter;text-align:left;width:100%}
+  .opcao:hover{border-color:var(--orquidea)}
+  .forca{display:flex;gap:6px;margin-top:10px}.forca span{height:6px;flex:1;border-radius:99px;background:#E6E2F3}
+  .forca.f1 span:nth-child(1){background:var(--erro)}.forca.f2 span:nth-child(-n+2){background:var(--alerta)}.forca.f3 span:nth-child(-n+3){background:var(--orquidea)}.forca.f4 span{background:var(--ok)}
+  @media print{body *{visibility:hidden}#impressao,#impressao *{visibility:visible}#impressao{position:absolute;left:0;top:0;width:100%;padding:20px;font-family:Inter,sans-serif;font-size:11pt}}
+</style>
+</head>
+<body class="app-pg">
+<div class="app" id="app">
+  <header><a href="/" aria-label="Lev Soul"><img src="/assets/img/logo-cor.png" alt="Lev Soul"></a><button class="avatar" id="avatar" title="Sair">··</button></header>
+  <main>
+
+    <!-- C0.1 · WhatsApp -->
+    <section class="tela ativa" id="t-whats">
+      <h1>Que bom ter você de volta</h1>
+      <p class="sub">Digite o WhatsApp que você usou na ativação — a gente cuida do resto.</p>
+      <label for="lWhats">Seu WhatsApp (com DDD)</label>
+      <input type="tel" id="lWhats" inputmode="numeric" autocomplete="tel" placeholder="(62) 90000-0000">
+      <div class="erro-msg" id="erroWhats"></div>
+      <button class="btn btn-pri btn-bloco" id="btnWhats" style="margin-top:16px">Continuar →</button>
+      <p class="micro">Ainda não tem Lev Soul? <a href="/assinar/" style="margin-left:4px">Ative em 2 minutos</a></p>
+    </section>
+
+    <!-- C0.3 · senha -->
+    <section class="tela" id="t-senha">
+      <button class="voltar" onclick="CONTA.voltarWhats()">‹ Trocar número</button>
+      <h1>Agora é só a sua senha</h1>
+      <p class="sub">Entrando como <strong id="senhaMasc">••••</strong></p>
+      <label for="lSenha">Sua senha</label>
+      <input type="password" id="lSenha" autocomplete="current-password">
+      <div class="erro-msg" id="erroSenha"></div>
+      <button class="btn btn-pri btn-bloco" id="btnSenha" style="margin-top:16px">Entrar</button>
+      <button class="btn btn-sec btn-bloco" onclick="CONTA.pedirCodigo('login')">Entrar com código no WhatsApp</button>
+      <div style="text-align:center"><button class="link" onclick="CONTA.pedirCodigo('recuperacao')">Esqueci minha senha</button></div>
+    </section>
+
+    <!-- C0.2 · código -->
+    <section class="tela" id="t-otp">
+      <button class="voltar" onclick="CONTA.voltarWhats()">‹ Trocar número</button>
+      <h1>Enviamos um código no seu WhatsApp</h1>
+      <p class="sub">Número terminado em <strong id="otpMasc">••••</strong></p>
+      <div class="otp-caixas" id="otp">
+        <input type="tel" maxlength="6" inputmode="numeric" autocomplete="one-time-code"><input type="tel" maxlength="1" inputmode="numeric"><input type="tel" maxlength="1" inputmode="numeric"><input type="tel" maxlength="1" inputmode="numeric"><input type="tel" maxlength="1" inputmode="numeric"><input type="tel" maxlength="1" inputmode="numeric">
+      </div>
+      <div class="erro-msg" id="erroOtp" style="justify-content:center"></div>
+      <div class="otp-links"><button class="link" id="reenviar" onclick="CONTA.reenviar()">Não chegou? Reenviar código</button><br><span class="dica">Vale por alguns minutos. Se não foi você, pode ignorar.</span></div>
+    </section>
+
+    <!-- C0.4 · criar senha -->
+    <section class="tela" id="t-criar">
+      <h1 id="criarTitulo">Você já está dentro 🤍</h1>
+      <p class="sub">Quer criar uma senha pra entrar ainda mais rápido da próxima vez? Leva 30 segundos — e dá pra pular.</p>
+      <label for="nova">Crie sua senha</label>
+      <input type="password" id="nova" autocomplete="new-password">
+      <div class="forca" id="forca"><span></span><span></span><span></span><span></span></div>
+      <p class="dica" id="forcaRot">Mínimo de 8 caracteres</p>
+      <div class="erro-msg" id="erroCriar"></div>
+      <button class="btn btn-pri btn-bloco" id="btnCriar" style="margin-top:16px">Criar senha</button>
+      <button class="btn btn-fant btn-bloco" onclick="CONTA.entrar()">Deixar pra depois</button>
+    </section>
+
+    <!-- C0.5 · sem conta -->
+    <section class="tela" id="t-semconta">
+      <button class="voltar" onclick="CONTA.voltarWhats()">‹ Voltar</button>
+      <h1>Esse WhatsApp ainda não tem um Lev Soul ativo</h1>
+      <p class="sub">Pode ser que você tenha ativado com outro número — ou pode ser a sua hora de começar.</p>
+      <a class="btn btn-pri btn-bloco" href="/assinar/" style="margin-top:16px">Ativar o Lev Soul (2 min)</a>
+      <button class="btn btn-sec btn-bloco" onclick="CONTA.voltarWhats()">Tentar outro número</button>
+      <p class="micro" style="margin-top:16px">Sua empresa ativou o Lev Soul para você? <a href="/empresas/#colaborador" style="margin-left:4px">Ative por aqui</a></p>
+    </section>
+
+    <!-- C1 · início -->
+    <section class="tela" id="t-inicio">
+      <h1 id="olaNome">Oi 🤍</h1>
+      <div id="cardMensal"></div>
+      <div id="cardEmpresa"></div>
+      <h3 style="margin-top:24px">Próximas sessões</h3>
+      <div id="listaAg"></div>
+      <h3 style="margin-top:24px">Atalhos</h3>
+      <div class="grade-ajuda">
+        <button class="aj" onclick="CONTA.irTab('pagamentos')"><span class="em">🧾</span><div class="t">Pagamentos</div></button>
+        <button class="aj" onclick="CONTA.irTab('meu')"><span class="em">💜</span><div class="t">Meu Lev Soul</div></button>
+        <button class="aj" onclick="CONTA.verContrato()"><span class="em">📄</span><div class="t">Contrato</div></button>
+        <button class="aj" onclick="CONTA.irTab('ajuda')"><span class="em">💬</span><div class="t">Ajuda</div></button>
+      </div>
+    </section>
+
+    <!-- C2 · pagamentos -->
+    <section class="tela" id="t-pagamentos">
+      <h1>Pagamentos</h1>
+      <p class="sub">Tudo que entrou e o que está por vir — sem letra miúda.</p>
+      <div id="listaPag"></div>
+    </section>
+
+    <!-- C3 · meu lev soul -->
+    <section class="tela" id="t-meu">
+      <h1>Meu Lev Soul</h1>
+      <div class="card" id="cardAss"></div>
+      <button class="btn btn-sec btn-bloco" onclick="CONTA.novaSolicitacao('familia')">Pedir inclusão de alguém</button>
+      <button class="btn btn-sec btn-bloco" style="border-color:#E2DEF0;color:var(--grafite)" onclick="CONTA.verContrato()">📄 Ver meu contrato</button>
+      <div style="text-align:center;margin-top:18px"><button class="link" id="btnEncerrar" onclick="CONTA.irTab('cx1')">Encerrar ou pausar a assinatura</button></div>
+    </section>
+
+    <!-- C4 · contrato -->
+    <section class="tela" id="t-contrato">
+      <button class="voltar" onclick="CONTA.irTab('meu')">‹ Voltar</button>
+      <h1>Seu contrato</h1>
+      <div class="card" id="cardContrato"></div>
+      <details class="contrato" open><summary>📄 Termo de Adesão <span>⌄</span></summary><div class="contrato-corpo" id="contratoCorpo" style="max-height:none"></div></details>
+      <button class="btn btn-pri btn-bloco" onclick="CONTA.imprimir()" style="margin-top:16px">Baixar em PDF</button>
+      <p class="micro">É a sua segurança jurídica — sempre à mão.</p>
+    </section>
+
+    <!-- C5 · ajuda -->
+    <section class="tela" id="t-ajuda">
+      <h1>Como a gente pode ajudar?</h1>
+      <div class="grade-ajuda">
+        <button class="aj" onclick="CONTA.novaSolicitacao('remarcacao')"><span class="em">📅</span><div class="t">Remarcar uma sessão</div></button>
+        <button class="aj" onclick="CONTA.novaSolicitacao('familia')"><span class="em">👨‍👩‍👧</span><div class="t">Alterar a família</div></button>
+        <button class="aj" onclick="CONTA.novaSolicitacao('estorno')"><span class="em">💸</span><div class="t">Pedir estorno</div></button>
+        <button class="aj" onclick="CONTA.novaSolicitacao('outro')"><span class="em">💬</span><div class="t">Outro assunto</div></button>
+      </div>
+      <a class="btn btn-wa btn-bloco" id="btnWaAjuda" href="#" style="margin-top:16px">💬 Falar com a equipe no WhatsApp</a>
+      <h3 style="margin-top:24px">Suas solicitações</h3>
+      <div id="listaSol"></div>
+      <h3 style="margin-top:24px">Mensagens</h3>
+      <label class="aceite" style="margin-top:8px"><input type="checkbox" id="chkOptin"><span class="caixinha"><svg viewBox="0 0 16 16"><path d="M2.5 8.5l3.5 3.5 7-8" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">Quero receber conteúdos e novidades da Lev Soul pelo WhatsApp.<small>As mensagens do serviço (código, cobrança, lembretes de sessão) não dependem disto.</small></span></label>
+    </section>
+
+    <!-- C6 · encerrar -->
+    <section class="tela" id="t-cx1">
+      <button class="voltar" onclick="CONTA.irTab('meu')">‹ Voltar</button>
+      <h1>O que pesou na decisão?</h1>
+      <p class="sub">Uma pergunta só. Ela ajuda a gente a cuidar melhor — e às vezes a resolver junto.</p>
+      <div id="motivos"></div>
+    </section>
+    <section class="tela" id="t-cx2">
+      <button class="voltar" onclick="CONTA.irTab('cx1')">‹ Voltar</button>
+      <div id="oferta"></div>
+    </section>
+    <section class="tela" id="t-cx3">
+      <div class="sucesso-anim"><img src="/assets/img/simbolo-cor.png" alt="" style="width:90px"></div>
+      <div class="sucesso-txt"><h1 id="cx3titulo">Feito.</h1><p class="sub" id="cx3texto"></p></div>
+      <button class="btn btn-sec btn-bloco" onclick="CONTA.entrar()" style="margin-top:16px">Voltar ao início</button>
+    </section>
+  </main>
+
+  <nav class="inferior">
+    <button id="nav-inicio" class="ativa" onclick="CONTA.irTab('inicio')"><span class="ic">🏠</span>Início</button>
+    <button id="nav-pagamentos" onclick="CONTA.irTab('pagamentos')"><span class="ic">🧾</span>Pagamentos</button>
+    <button id="nav-meu" onclick="CONTA.irTab('meu')"><span class="ic">💜</span>Meu Lev Soul</button>
+    <button id="nav-ajuda" onclick="CONTA.irTab('ajuda')"><span class="ic">💬</span>Ajuda</button>
+  </nav>
+</div>
+
+<div class="veu" id="veu" onclick="CONTA.fecharSheet()"></div>
+<div class="sheet" id="sheetSol">
+  <div class="alca"></div>
+  <h3 id="solTitulo">Pedir</h3>
+  <p class="sub">Conta pra gente do seu jeito — a equipe responde em até 1 dia útil, aqui e no WhatsApp.</p>
+  <textarea id="solMsg" placeholder="Escreve aqui..."></textarea>
+  <button class="btn btn-pri btn-bloco" id="btnEnviarSol">Enviar</button>
+</div>
+<div id="impressao" style="display:none"></div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
+<script src="/assets/js/lev.js"></script>
+<script src="/assets/js/contrato.js"></script>
+<script src="/assets/js/conta.js"></script>
+</body>
+</html>
